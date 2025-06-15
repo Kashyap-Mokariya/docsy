@@ -9,7 +9,7 @@ const DocumentsIdPage = async ({ params }: DocumentsIdPageProps) => {
     const { documentId } = await params
 
     return (
-        <div>DocumentsIdPage</div>
+        <div>Document ID : {documentId} </div>
     )
 }
 
