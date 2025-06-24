@@ -161,21 +161,27 @@ body {
   }
 
   h1 { 
-    font-size: 1.4rem; 
+    font-size: 32px; 
   }
 
   h2 { 
-    font-size: 1.2rem; 
+    font-size: 26.67px; 
   }
 
   h3 { 
-    font-size: 1.1rem; 
+    font-size: 21.33px; 
   }
 
-  h4, 
-  h5, 
+  h4 { 
+    font-size: 18.67px; 
+  }
+
+  h5 { 
+    font-size: 16px; 
+  }
+
   h6 { 
-    font-size: 1rem; 
+    font-size: 14.6; 
   }
 
   /* Table-specific styling */
