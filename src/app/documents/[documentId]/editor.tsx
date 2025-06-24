@@ -11,12 +11,40 @@ import TableRow from '@tiptap/extension-table-row'
 import Image from '@tiptap/extension-image'
 import ImageResize from "tiptap-extension-resize-image"
 import React from 'react'
+import { useEditorStore } from '@/store/use-editor-store'
 
 type Props = {}
 
 export const Editor = (props: Props) => {
 
+  const { setEditor } = useEditorStore();
+
   const editor = useEditor({
+
+    onCreate({ editor }) {
+      setEditor(editor)
+    },
+    onDestroy(props) {
+      setEditor(null)
+    },
+    onUpdate({ editor }) {
+      setEditor(editor)
+    },
+    onSelectionUpdate({ editor }) {
+      setEditor(editor)
+    },
+    onTransaction({ editor }) {
+      setEditor(editor)
+    },
+    onFocus({ editor }) {
+      setEditor(editor)
+    },
+    onBlur({ editor }) {
+      setEditor(editor)
+    },
+    onContentError({ editor }) {
+      setEditor(editor)
+    },
     editorProps: {
       attributes: {
         style: "padding-left: 56px; padding-right: 56px;",
