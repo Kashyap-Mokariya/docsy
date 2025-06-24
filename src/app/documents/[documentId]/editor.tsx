@@ -11,6 +11,8 @@ import TableRow from '@tiptap/extension-table-row'
 import Underline from '@tiptap/extension-underline'
 import Image from '@tiptap/extension-image'
 import ImageResize from "tiptap-extension-resize-image"
+import FontFamily from '@tiptap/extension-font-family'
+import TextStyle from '@tiptap/extension-text-style'
 import React from 'react'
 import { useEditorStore } from '@/store/use-editor-store'
 
@@ -54,6 +56,8 @@ export const Editor = (props: Props) => {
     },
     extensions: [
       StarterKit,
+      TextStyle,
+      FontFamily,
       Underline,
       Image,
       ImageResize,
