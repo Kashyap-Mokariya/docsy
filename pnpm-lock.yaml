@@ -113,6 +113,9 @@ importers:
       '@tiptap/extension-task-list':
         specifier: 2.10.2
         version: 2.10.2(@tiptap/core@2.14.0(@tiptap/pm@2.10.2))
+      '@tiptap/extension-underline':
+        specifier: 2.10.2
+        version: 2.10.2(@tiptap/core@2.14.0(@tiptap/pm@2.10.2))
       '@tiptap/pm':
         specifier: 2.10.2
         version: 2.10.2
@@ -1288,6 +1291,11 @@ packages:
 
   '@tiptap/extension-text@2.14.0':
     resolution: {integrity: sha512-rHny566nGZHq61zRLwQ9BPG55W/O+eDKwUJl+LhrLiVWwzpvAl9QQYixtoxJKOY48VK41PKwxe3bgDYgNs/Fhg==}
+    peerDependencies:
+      '@tiptap/core': ^2.7.0
+
+  '@tiptap/extension-underline@2.10.2':
+    resolution: {integrity: sha512-jDWGqqUYkrLgqRQDyqh+LpbkiqPfaWOoo5bydYL0u80GPEavovxZPoCJ/HDlOfdwm+FIPy55OP/29tELJRptmg==}
     peerDependencies:
       '@tiptap/core': ^2.7.0
 
@@ -4289,6 +4297,10 @@ snapshots:
       '@tiptap/core': 2.14.0(@tiptap/pm@2.10.2)
 
   '@tiptap/extension-text@2.14.0(@tiptap/core@2.14.0(@tiptap/pm@2.10.2))':
+    dependencies:
+      '@tiptap/core': 2.14.0(@tiptap/pm@2.10.2)
+
+  '@tiptap/extension-underline@2.10.2(@tiptap/core@2.14.0(@tiptap/pm@2.10.2))':
     dependencies:
       '@tiptap/core': 2.14.0(@tiptap/pm@2.10.2)
 
