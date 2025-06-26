@@ -1,12 +1,13 @@
 "use client"
 
 import { Button } from '@/components/ui/button'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
 import { useEditorStore } from '@/store/use-editor-store'
-import { BoldIcon, ChevronDownIcon, HighlighterIcon, ItalicIcon, Link2Icon, ListTodoIcon, LucideIcon, MessageSquarePlusIcon, PrinterIcon, Redo2Icon, RemoveFormattingIcon, SpellCheckIcon, UnderlineIcon, Undo2Icon } from 'lucide-react'
+import { BoldIcon, ChevronDownIcon, HighlighterIcon, ImageIcon, ItalicIcon, Link2Icon, ListTodoIcon, LucideIcon, MessageSquarePlusIcon, PrinterIcon, Redo2Icon, RemoveFormattingIcon, SearchIcon, SpellCheckIcon, UnderlineIcon, Undo2Icon, UploadIcon } from 'lucide-react'
 import React, { useState } from 'react'
 import { SketchPicker, ColorResult } from 'react-color'
 
@@ -18,23 +19,119 @@ type ToolbarButtonProps = {
 
 type Level = 1 | 2 | 3 | 4 | 5 | 6
 
+const ImageButton = () => {
+    const { editor } = useEditorStore()
+
+    const [imageUrl, setImageUrl] = useState("")
+    const [isDialogOpen, setIsDialogOpen] = useState(false)
+
+    const onChange = (src: string) => {
+        editor?.chain().focus().setImage({ src }).run()
+        setIsDialogOpen(false)
+    }
+
+    const onUpload = () => {
+        const input = document.createElement("input")
+        input.type = 'file'
+        input.accept = 'image/*'
+
+        input.onchange = (e) => {
+            const file = (e.target as HTMLInputElement).files?.[0]
+
+            if (file) {
+                const imageUrl = URL.createObjectURL(file)
+                onChange(imageUrl)
+            }
+        }
+
+        input.click()
+    }
+
+    const handleImageUrlSubmit = () => {
+        if (imageUrl) {
+            onChange(imageUrl)
+            setImageUrl("")
+            setIsDialogOpen(false)
+        }
+    }
+
+    return (
+        <>
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <button
+                        className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden"
+                    >
+                        <ImageIcon className='size-4' />
+                    </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                    <DropdownMenuItem
+                        onClick={onUpload}
+                    >
+                        <UploadIcon className='size-4 mr-2' />
+                        Upload
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                        onClick={() => setIsDialogOpen(true)}
+                    >
+                        <SearchIcon className='size-4 mr-2' />
+                        Insert image URL
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
+
+            <Dialog
+                open={isDialogOpen}
+                onOpenChange={setIsDialogOpen}
+            >
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>
+                            Insert image URL
+                        </DialogTitle>
+                    </DialogHeader>
+
+                    <Input
+                        placeholder="Insert image URL"
+                        value={imageUrl}
+                        onChange={(e) => setImageUrl(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                handleImageUrlSubmit()
+                            }
+                        }}
+                    />
+                    <DialogFooter>
+                        <Button
+                            onClick={handleImageUrlSubmit}
+                        >
+                            Insert
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+        </>
+    )
+}
+
 const LinkButton = () => {
     const { editor } = useEditorStore()
 
     const [value, setValue] = useState("")
-    const [isOpen, setIsOpen] = useState(false)
+    const [isDialogOpen, setIsDialogOpen] = useState(false)
 
     const onChange = (href: string) => {
         editor?.chain().focus().extendMarkRange("link").setLink({ href }).run()
         setValue("")
-        setIsOpen(false)
+        setIsDialogOpen(false)
     }
 
     return (
         <DropdownMenu
-            open={isOpen}
+            open={isDialogOpen}
             onOpenChange={(open) => {
-                setIsOpen(open)
+                setIsDialogOpen(open)
                 if (open) {
                     setValue(editor?.getAttributes("link").href || "")
                 }
@@ -397,13 +494,14 @@ export const Toolbar = () => {
             <TextColorButton />
             <Separator orientation='vertical' className='h-6 bg-neutral-300' />
 
-            {/* TODO: Highlight Color */}
+            {/* Highlight Color Button*/}
             <HighlightColorButton />
 
-            {/* TODO: Link */}
+            {/* Link Button*/}
             <LinkButton />
 
-            {/* TODO: Image */}
+            {/* Image Button*/}
+            <ImageButton />
 
             {/* TODO: Align */}
 
