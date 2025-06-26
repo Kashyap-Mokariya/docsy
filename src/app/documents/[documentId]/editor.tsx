@@ -16,6 +16,7 @@ import TextStyle from '@tiptap/extension-text-style'
 import Highlight from '@tiptap/extension-highlight'
 import { Color } from '@tiptap/extension-color'
 import Link from '@tiptap/extension-link'
+import TextAlign from '@tiptap/extension-text-align'
 import React from 'react'
 import { useEditorStore } from '@/store/use-editor-store'
 
@@ -59,6 +60,9 @@ export const Editor = (props: Props) => {
     },
     extensions: [
       StarterKit,
+      TextAlign.configure({
+        types: ['heading', 'paragraph'],
+      }),
       Link.configure({
         openOnClick: false,
         autolink: true,
