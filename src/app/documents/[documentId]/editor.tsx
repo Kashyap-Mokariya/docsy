@@ -19,6 +19,7 @@ import Link from '@tiptap/extension-link'
 import TextAlign from '@tiptap/extension-text-align'
 import React from 'react'
 import { useEditorStore } from '@/store/use-editor-store'
+import { FontSizeExtension } from '@/extensions/font-size'
 
 type Props = {}
 
@@ -60,6 +61,7 @@ export const Editor = (props: Props) => {
     },
     extensions: [
       StarterKit,
+      FontSizeExtension,
       TextAlign.configure({
         types: ['heading', 'paragraph'],
       }),
