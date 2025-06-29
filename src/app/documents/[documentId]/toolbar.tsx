@@ -6,6 +6,7 @@ import FontSizeButton from '@/components/ToolBarButtons/FontSizeButton'
 import HeadingLevelButton from '@/components/ToolBarButtons/HeadingLevelButton'
 import HighlightColorButton from '@/components/ToolBarButtons/HighlightColorButton'
 import ImageButton from '@/components/ToolBarButtons/ImageButton'
+import LineHeightButton from '@/components/ToolBarButtons/LineHeightButton'
 import LinkButton from '@/components/ToolBarButtons/LinkButton'
 import ListButton from '@/components/ToolBarButtons/ListButton'
 import TextColorButton from '@/components/ToolBarButtons/TextColorButton'
@@ -133,7 +134,7 @@ export const Toolbar = () => {
             <HeadingLevelButton />
             <Separator orientation='vertical' className='h-6 bg-neutral-300' />
 
-            {/* TODO: Font Size */}
+            {/* Font Size */}
             <FontSizeButton />
             <Separator orientation='vertical' className='h-6 bg-neutral-300' />
 
@@ -160,7 +161,8 @@ export const Toolbar = () => {
             {/* Align Button */}
             <AlignButton />
 
-            {/* TODO: Line height */}
+            {/* Line height */}
+            <LineHeightButton />
 
             {/* List Button */}
             <ListButton />
