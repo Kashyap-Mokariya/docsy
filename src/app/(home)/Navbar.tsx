@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import SearchInput from './SearchInput'
+import { UserButton } from '@clerk/nextjs'
 
 type Props = {}
 
@@ -22,7 +23,7 @@ export const Navbar = (props: Props) => {
             </h3>
         </div>
         <SearchInput />
-        <div></div>
+        <UserButton />
     </nav>
   )
 }
