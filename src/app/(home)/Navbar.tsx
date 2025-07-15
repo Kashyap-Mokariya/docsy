@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import SearchInput from './SearchInput'
-import { UserButton } from '@clerk/nextjs'
+import { UserButton, OrganizationSwitcher } from '@clerk/nextjs'
 
 type Props = {}
 
@@ -23,7 +23,15 @@ export const Navbar = (props: Props) => {
             </h3>
         </div>
         <SearchInput />
-        <UserButton />
+        <div className='flex gap-3 items-center pl-6'>
+            <OrganizationSwitcher
+                afterCreateOrganizationUrl="/"
+                afterLeaveOrganizationUrl="/"
+                afterSelectOrganizationUrl="/"
+                afterSelectPersonalUrl="/"
+            />
+            <UserButton />
+        </div>
     </nav>
   )
 }
