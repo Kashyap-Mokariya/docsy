@@ -9,6 +9,8 @@ import { Bold, FileIcon, FileJsonIcon, FilePenIcon, FilePlusIcon, FileTextIcon, 
 import { BsFilePdf } from 'react-icons/bs'
 import { useEditorStore } from '@/store/use-editor-store'
 import { OrganizationSwitcher, UserButton } from '@clerk/nextjs'
+import { Avatars } from '@/app/documents/[documentId]/avatars'
+import { Inbox } from '@/app/documents/[documentId]/inbox'
 
 type Props = {}
 
@@ -230,6 +232,8 @@ export const Navbar = (props: Props) => {
                 </div>
             </div>
             <div className='flex gap-3 items-center pl-6'>
+                <Avatars />
+                <Inbox />
                 <OrganizationSwitcher
                     afterCreateOrganizationUrl="/"
                     afterLeaveOrganizationUrl="/"

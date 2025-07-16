@@ -48,7 +48,7 @@ export async function POST(req: Request) {
 				user.fullName ??
 				user.primaryEmailAddress?.emailAddress ??
 				"Anonymous",
-			avatar: user.imageUrl || undefined,
+			avatar: user.imageUrl,
 		},
 	});
 
