@@ -24,6 +24,7 @@ import { lineHeightExtension } from '@/extensions/line-height'
 import { useLiveblocksExtension } from "@liveblocks/react-tiptap";
 import { Ruler } from './ruler'
 import { Threads } from './Threads'
+import { useMyPresence, useOthers } from '@liveblocks/react';
 
 type Props = {}
 
@@ -32,6 +33,10 @@ export const Editor = (props: Props) => {
   const liveblocks = useLiveblocksExtension()
 
   const { setEditor } = useEditorStore();
+
+  // Liveblocks presence hooks
+  const [_, updateMyPresence] = useMyPresence();
+  const others = useOthers();
 
   const editor = useEditor({
     immediatelyRender: false,
@@ -52,9 +57,11 @@ export const Editor = (props: Props) => {
     },
     onFocus({ editor }) {
       setEditor(editor)
+      updateMyPresence({ focused: true }); // Set presence to focused
     },
     onBlur({ editor }) {
       setEditor(editor)
+      updateMyPresence({ focused: false }); // Set presence to not focused
     },
     onContentError({ editor }) {
       setEditor(editor)
@@ -85,7 +92,7 @@ export const Editor = (props: Props) => {
       TextStyle,
       FontFamily,
       Underline,
-      Image,
+      // Image,
       ImageResize,
       Table.configure({
         resizable: true,
@@ -117,12 +124,21 @@ export const Editor = (props: Props) => {
     //   `,
   })
 
+  // Effect: If any other user is focused, blur this editor
+  React.useEffect(() => {
+    if (!editor) return;
+    const someoneElseFocused = others.some(other => other.presence?.focused);
+    if (someoneElseFocused) {
+      editor.commands.blur();
+    }
+  }, [others, editor]);
+
   return (
     <div className='size-full overflow-x-auto bg-[#F9FBFD] px-4 print:p-0 print:bg-white print:overflow-visible'>
       <Ruler />
       <div className='min-w-max flex justify-center w-[816px] py-4 print:py-0 mx-auto print:w-full print:min-w-0'>
         <EditorContent editor={editor} />
-        <Threads editor={editor}/>
+        <Threads editor={editor} />
       </div>
     </div>
   )
