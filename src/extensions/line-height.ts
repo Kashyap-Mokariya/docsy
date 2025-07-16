@@ -1,5 +1,4 @@
-import {Extension} from "@tiptap/react";
-import {CLIENT_STATIC_FILES_RUNTIME_WEBPACK} from "next/dist/shared/lib/constants";
+import { Extension } from "@tiptap/react";
 
 declare module "@tiptap/core" {
 	interface Commands<ReturnType> {
@@ -49,46 +48,46 @@ export const lineHeightExtension = Extension.create({
 		return {
 			setLineHeight:
 				(lineHeight: string) =>
-				({tr, state, dispatch}) => {
-					const {selection} = state;
-					tr = tr.setSelection(selection);
+					({ tr, state, dispatch }) => {
+						const { selection } = state;
+						tr = tr.setSelection(selection);
 
-					const {from, to} = selection;
+						const { from, to } = selection;
 
-					state.doc.nodesBetween(from, to, (node, pos) => {
-						if (this.options.types.includes(node.type.name)) {
-							tr = tr.setNodeMarkup(pos, undefined, {
-								...node.attrs,
-								lineHeight,
-							});
-						}
-					});
+						state.doc.nodesBetween(from, to, (node, pos) => {
+							if (this.options.types.includes(node.type.name)) {
+								tr = tr.setNodeMarkup(pos, undefined, {
+									...node.attrs,
+									lineHeight,
+								});
+							}
+						});
 
-					if (dispatch) dispatch(tr);
+						if (dispatch) dispatch(tr);
 
-					return true;
-				},
+						return true;
+					},
 			unsetLineHeight:
 				() =>
-				({tr, state, dispatch}) => {
-					const {selection} = state;
-					tr = tr.setSelection(selection);
+					({ tr, state, dispatch }) => {
+						const { selection } = state;
+						tr = tr.setSelection(selection);
 
-					const {from, to} = selection;
+						const { from, to } = selection;
 
-					state.doc.nodesBetween(from, to, (node, pos) => {
-						if (this.options.types.includes(node.type.name)) {
-							tr = tr.setNodeMarkup(pos, undefined, {
-								...node.attrs,
-								lineHeight: this.options.defaultLineHeight,
-							});
-						}
-					});
+						state.doc.nodesBetween(from, to, (node, pos) => {
+							if (this.options.types.includes(node.type.name)) {
+								tr = tr.setNodeMarkup(pos, undefined, {
+									...node.attrs,
+									lineHeight: this.options.defaultLineHeight,
+								});
+							}
+						});
 
-					if (dispatch) dispatch(tr);
+						if (dispatch) dispatch(tr);
 
-					return true;
-				},
+						return true;
+					},
 		};
 	},
 });

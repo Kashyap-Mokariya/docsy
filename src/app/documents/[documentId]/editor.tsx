@@ -24,20 +24,26 @@ import { useLiveblocksExtension } from "@liveblocks/react-tiptap";
 import { Ruler } from './ruler'
 import { Threads } from './Threads'
 import { useMyPresence, useOthers, useStorage } from '@liveblocks/react';
+import { LEFT_MARGIN_DEFAULT, RIGHT_MARGIN_DEFAULT } from '@/constants/margin'
 
-type Props = {}
+interface EditorProps {
+  initialContent: string | undefined
+}
 
-export const Editor = (props: Props) => {
+export const Editor = ({ initialContent }: EditorProps) => {
 
-  const leftMargin = useStorage<number>((state) => state.leftMargin)
-  const rightMargin = useStorage<number>((state) => state.rightMargin)
+  const leftMargin = useStorage<number>((state) => state.leftMargin) ?? LEFT_MARGIN_DEFAULT
+  const rightMargin = useStorage<number>((state) => state.rightMargin) ?? RIGHT_MARGIN_DEFAULT
 
-  const liveblocks = useLiveblocksExtension()
+  const liveblocks = useLiveblocksExtension({
+    initialContent,
+    offlineSupport_experimental: true
+  })
 
   const { setEditor } = useEditorStore();
 
   // Liveblocks presence hooks
-  const [_, updateMyPresence] = useMyPresence();
+  const [, updateMyPresence] = useMyPresence();
   const others = useOthers();
 
   const editor = useEditor({
@@ -45,7 +51,7 @@ export const Editor = (props: Props) => {
     onCreate({ editor }) {
       setEditor(editor)
     },
-    onDestroy(props) {
+    onDestroy() {
       setEditor(null)
     },
     onUpdate({ editor }) {
@@ -70,7 +76,7 @@ export const Editor = (props: Props) => {
     },
     editorProps: {
       attributes: {
-        style: `padding-left: ${leftMargin ?? 56}px; padding-right: ${rightMargin ?? 56}px;`,
+        style: `padding-left: ${leftMargin ?? LEFT_MARGIN_DEFAULT}px; padding-right: ${rightMargin ?? RIGHT_MARGIN_DEFAULT}px;`,
         class: "focus:outline-none print:border-0 bg-white border border-[#C7C7C7] flex flex-col min-h-[1054px] w-[816px] pt-10 pr-14 pb-10 cursor-text"
       }
     },
@@ -108,22 +114,6 @@ export const Editor = (props: Props) => {
       }),
     ],
     content: '<p>Hello World! 🌎️</p>',
-    // content: `
-    //     <table>
-    //       <tbody>
-    //         <tr>
-    //           <th>Name</th>
-    //           <th colspan="3">Description</th>
-    //         </tr>
-    //         <tr>
-    //           <td>Cyndi Lauper</td>
-    //           <td>Singer</td>
-    //           <td>Songwriter</td>
-    //           <td>Actress</td>
-    //         </tr>
-    //       </tbody>
-    //     </table>
-    //   `,
   })
 
   // Effect: If any other user is focused, blur this editor

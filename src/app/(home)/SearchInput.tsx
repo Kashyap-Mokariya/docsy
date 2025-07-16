@@ -6,9 +6,7 @@ import { useSearchParam } from '@/hooks/use-search-param'
 import { SearchIcon, XIcon } from 'lucide-react'
 import React, { useRef, useState } from 'react'
 
-type Props = {}
-
-const SearchInput = (props: Props) => {
+const SearchInput = () => {
 
     const [search, setSearch] = useSearchParam()
     const [value, setValue] = useState(search)

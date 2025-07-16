@@ -11,11 +11,13 @@ import { FullScreenLoader } from "@/components/FullScreenLoader";
 import { getUsers, getRoomDocuments } from "./actions";
 import { toast } from "sonner";
 import { Id } from "../../../../convex/_generated/dataModel";
+import { LEFT_MARGIN_DEFAULT, RIGHT_MARGIN_DEFAULT } from "@/constants/margin";
 
 type User = {
     id: string;
     name: string;
     avatar: string;
+    color: string;
 }
 
 export function Room({ children }: { children: ReactNode }) {
@@ -30,7 +32,7 @@ export function Room({ children }: { children: ReactNode }) {
                 const list = await getUsers()
                 setUsers(list);
             }
-            catch (error) {
+            catch {
                 toast.error("Failed to fetch users");
             }
         },
@@ -55,7 +57,7 @@ export function Room({ children }: { children: ReactNode }) {
 
                 return await response.json()
             }}
-            resolveUsers={({userIds}) => {
+            resolveUsers={({ userIds }) => {
                 return userIds.map(
                     (userId) => users.find((user) => user.id === userId) ?? undefined
                 )
@@ -74,7 +76,7 @@ export function Room({ children }: { children: ReactNode }) {
 
                 return filteredUsers.map((user) => user.id);
             }}
-            resolveRoomsInfo={async ({roomIds}) => {
+            resolveRoomsInfo={async ({ roomIds }) => {
                 const documents = await getRoomDocuments(roomIds as Id<"documents">[]);
 
                 return documents.map((document) => ({
@@ -86,7 +88,7 @@ export function Room({ children }: { children: ReactNode }) {
             <RoomProvider
                 id={params.documentId as string}
                 initialStorage={
-                    {leftMargin: 56, rightMargin: 56}
+                    { leftMargin: LEFT_MARGIN_DEFAULT, rightMargin: RIGHT_MARGIN_DEFAULT }
                 }
             >
                 <ClientSideSuspense fallback={<FullScreenLoader label="Loading room..." />}>
