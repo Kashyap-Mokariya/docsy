@@ -1,8 +1,8 @@
 "use client"
 
+import { Button } from "@/components/ui/button"
 import { AlertTriangleIcon } from "lucide-react"
-import { Button } from "./components/ui/button"
-import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 const ErrorPage = (
     {
@@ -13,6 +13,9 @@ const ErrorPage = (
         reset: () => void
     }
 ) => {
+
+    const router = useRouter()
+
     return (
         <div className="min-h-screen flex flex-col items-center justify-center space-y-6">
             <div className="text-center space-y-4">
@@ -39,17 +42,15 @@ const ErrorPage = (
                     Try again
                 </Button>
                 <Button
-                    asChild
                     variant="ghost"
                     className="font-medium px-6"
+                    onClick={() => router.replace("/")}
                 >
-                    <Link
-                        href="/"
-                    >
                         Go back
-                    </Link>
                 </Button>
             </div>
         </div>
     )
 }
+
+export default ErrorPage
