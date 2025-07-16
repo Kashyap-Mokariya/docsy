@@ -9,7 +9,6 @@ import TableCell from '@tiptap/extension-table-cell'
 import TableHeader from '@tiptap/extension-table-header'
 import TableRow from '@tiptap/extension-table-row'
 import Underline from '@tiptap/extension-underline'
-import Image from '@tiptap/extension-image'
 import ImageResize from "tiptap-extension-resize-image"
 import FontFamily from '@tiptap/extension-font-family'
 import TextStyle from '@tiptap/extension-text-style'
@@ -24,11 +23,14 @@ import { lineHeightExtension } from '@/extensions/line-height'
 import { useLiveblocksExtension } from "@liveblocks/react-tiptap";
 import { Ruler } from './ruler'
 import { Threads } from './Threads'
-import { useMyPresence, useOthers } from '@liveblocks/react';
+import { useMyPresence, useOthers, useStorage } from '@liveblocks/react';
 
 type Props = {}
 
 export const Editor = (props: Props) => {
+
+  const leftMargin = useStorage<number>((state) => state.leftMargin)
+  const rightMargin = useStorage<number>((state) => state.rightMargin)
 
   const liveblocks = useLiveblocksExtension()
 
@@ -68,7 +70,7 @@ export const Editor = (props: Props) => {
     },
     editorProps: {
       attributes: {
-        style: "padding-left: 56px; padding-right: 56px;",
+        style: `padding-left: ${leftMargin ?? 56}px; padding-right: ${rightMargin ?? 56}px;`,
         class: "focus:outline-none print:border-0 bg-white border border-[#C7C7C7] flex flex-col min-h-[1054px] w-[816px] pt-10 pr-14 pb-10 cursor-text"
       }
     },
