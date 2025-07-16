@@ -44,7 +44,7 @@ export const Ruler = (props: Props) => {
         storage.set("leftMargin", position)
     }, [])
 
-    const rightMargin = useStorage<number>((state) => state.rightMargin)
+    const rightMargin = useStorage<number>((state) => state.rightMargin) ?? 56
     const setRightMargin = useMutation(({ storage }, position: number) => {
         storage.set("rightMargin", position)
     }, [])
